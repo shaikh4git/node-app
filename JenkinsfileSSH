@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage("Build Docker Image"){
             steps{
-                sh "docker build -t shaikhdocker/email_filter"
+                sh "docker build -t shaikhdocker/nodeapp:${DOCKER_TAG} ."
             }
         }
     }
