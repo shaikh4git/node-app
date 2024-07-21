@@ -26,8 +26,8 @@ pipeline {
         stage('Docker Push'){
             steps{
                 withCredentials([string(credentialsId: 'shaikh4docker', variable: 'dockerHubPwd')]) {
-                    sh "docker loging -u shaikh4docker -p ${dockerHubPwd}"
-                    sh "docker push shaikhdocker/nodeapp:${env.DOCKER_TAG}"
+                    sh "${env.DOCKER_PATH} loging -u shaikh4docker -p ${dockerHubPwd}"
+                    sh "${env.DOCKER_PATH} push shaikhdocker/nodeapp:${env.DOCKER_TAG}"
                 }
             }
         }
