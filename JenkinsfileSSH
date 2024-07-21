@@ -7,10 +7,10 @@ pipeline {
     }
     
     stages {
-        stage('Check Agent') {
+        stage('Check Agent for Shaikh Jenkins') {
             steps {
                 script {
-                    echo "Running on agent: ${env.NODE_NAME}"
+                    echo "Running on agent given by Shaikh: ${env.NODE_NAME}"
                 }
             }
         }
