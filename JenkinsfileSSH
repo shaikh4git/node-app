@@ -23,10 +23,18 @@ pipeline {
                 }
             }
         }
+        stage('Docker Push'){
+            steps{
+                withCredentials([string(credentialsId: 'shaikh4docker', variable: 'dockerHubPwd')]) {
+                    sh "docker loging -u shaikh4docker -p ${dockerHubPwd}"
+                    sh "docker push shaikhdocker/nodeapp:${env.DOCKER_TAG}"
+                }
+            }
+        }
     }
 }
 
 def getDockerTag() {
     def tag = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
-    return tag
+    return tag 
 }
