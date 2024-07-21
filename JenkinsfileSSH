@@ -1,10 +1,11 @@
-pipeline{
+pipeline {
     agent any
-    environment{
+    
+    environment {
         DOCKER_TAG = getDockerTag()
     }
-    stages{
-
+    
+    stages {
         stage('Check Agent') {
             steps {
                 script {
@@ -12,14 +13,20 @@ pipeline{
                 }
             }
         }
-        stage("Build Docker Image"){
-            steps{
-                sh "docker build -t shaikhdocker/nodeapp:${DOCKER_TAG} ."
+        
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    echo "Building Docker image with tag: ${env.DOCKER_TAG}"
+                    sh "docker build -t shaikhdocker/nodeapp:${env.DOCKER_TAG} ."
+                }
             }
         }
     }
 }
-def getDockerTag(){
-    def tag = sh script: 'git rev-parse HEAD', returnStdout: true
+
+// Function to get the Docker tag from the latest Git commit
+def getDockerTag() {
+    def tag = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
     return tag
 }
