@@ -2,6 +2,7 @@ pipeline {
     agent any
     
     environment {
+        DOCKER_PATH = '/usr/local/bin/docker' // Update this path based on where Docker is installed
         DOCKER_TAG = getDockerTag()
     }
     
@@ -18,14 +19,13 @@ pipeline {
             steps {
                 script {
                     echo "Building Docker image with tag: ${env.DOCKER_TAG}"
-                    sh "docker build -t shaikhdocker/nodeapp:${env.DOCKER_TAG} ."
+                    sh "${env.DOCKER_PATH} build -t shaikhdocker/nodeapp:${env.DOCKER_TAG} ."
                 }
             }
         }
     }
 }
 
-// Function to get the Docker tag from the latest Git commit
 def getDockerTag() {
     def tag = sh(script: 'git rev-parse HEAD', returnStdout: true).trim()
     return tag
